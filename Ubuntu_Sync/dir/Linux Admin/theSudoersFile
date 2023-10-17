@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Can be used to assign permissions and restrict permissions based on sudo/root
+
+# Note: This can break the system
+# Note: Use visudo to edit the file
+
+# For Any Errors: Use option e for edit or x to discard without changes
+
+# Recommendation: Avoid editing this file when possible
+
+sudo cat /etc/sudeoers;
+
+# Required to edit this file
+# The syntax is as follows:
+# \%MEMBERS_OF_GROUP or USER\ ALL(Execute commands on ALL)=(USER[Pose as USER]:GROUP[POSE AS GROUP]) COMMANDS_ALLOWED
+sudo visudo /etc/sudoers;

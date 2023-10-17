@@ -1,0 +1,16 @@
+Docker advantages:
+Less configuration drifts (Doesn't need to use different versions in configurations)
+Deploys an entire new image to avoid configuration drifts which makes debugging easier and reusable and readable
+
+Docker disadvanges:
+Recreating an entire image for a minor change is not ideal
+Configuration drifts are only reduced in deployment, but not while the image is running and being updated
+
+Terraform advantages:
+Declarative Over Procedural means no figuring out each script and order
+Procedural languages like Ansible will try to add/remove things in addition to the current configuration
+This can cause the scripts to be harder to read like having 10 instances and trying to add to get to 15, but you get 25
+Terraform will only add enough to reach the desired state (15) by adding 5 instances
+
+
+

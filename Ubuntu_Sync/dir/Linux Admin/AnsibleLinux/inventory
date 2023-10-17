@@ -1,0 +1,2 @@
+[UbuntuServers]
+127.0.0.1 ansible_user=u_name ansible_become_pass=pass

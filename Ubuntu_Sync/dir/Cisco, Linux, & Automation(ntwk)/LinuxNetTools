@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# view bandwidth use
+sudo iftop -i enp0s3;
+sudo iftop -t -i enp0s3;
+
+# view sockets 
+ss;
+ss -l sport 1;
+
+# capture packets
+tcpdump;
+

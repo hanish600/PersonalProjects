@@ -1,0 +1,10 @@
+================================
+    EXAMPLE OF ENABLING SSH
+================================
+enable
+conf term
+ip domain name testbed3
+crypto key gen rsa
+ip ssh version 2
+line vty 0 15
+transport input ssh

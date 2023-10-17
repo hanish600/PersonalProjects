@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# To view free space on filesystem
+sudo df -ah /;
+
+# To view free space from directories
+sudo df -ah;
+
+# View df with disk types
+sudo df -T | head -n 6;
+
+# To see the space for the files under directory ~/Desktop/dir
+sudo du -ach ~/Desktop/dir;
+
+# To view summary
+sudo du -sh ~/Desktop/dir;
+
+# To view inodes
+sudo du --inodes ~/Desktop/dir;
+
+# View devices symlink for mounting
+ls -l /dev/disk/by-uuid/;
+
+# list disks
+# We see serial disk a partitions 1 and 2 (sda1, sda2)
+# We can see our mountpoints
+# At this time we have no volume group or logical volumes
+lsblk;
+
+# To view physical volumes in LVM
+sudo pvs;
+sudo pvdisplay;
+# Similarly for volume groups
+sudo vgs;
+sudo vgdisplay;
+# Similarly for logical volumes
+sudo lvs;
+sudo lvdisplay;
+
+# My favorite way to see disk attached to my vm
+sudo fdisk -l | grep sd;

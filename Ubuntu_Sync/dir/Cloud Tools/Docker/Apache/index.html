@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>technest | Interest List Form</title>
+    <!-- Trying to add some style for technest -->
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+        .header {
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-bottom: 60px;
+            vertical-align: top;
+            text-align: left;
+            background: purple;
+            color: white;
+            font-size:32px
+        }
+        .content {
+            padding:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">technest | Interest List</div>
+    <div class="content">
+        <form id="valiatingForm">
+            <h3 style="color:red;">*<span style="color:black"> Required</span></h3>
+            <p><label for="fName">1. First Name </label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="fName" name="fname"><br></p></p>
+
+            <p><label for="lName">2. Last Name</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="lName" name="lname"><br></p></p>
+
+            <p><label for="address">3. Address</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="address" name="address"><br></p></p>
+
+            <p><label for="city">4. City</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="city" name="city"><br></p></p>
+
+            <p><label for="state">5. State</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="state" name="state"><br></p></p>
+
+            <p><label for="zipCode">6. Zip Code</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="zipCode" name="zipCode"><br></p></p>
+
+            <p><label for="phoneNumber">7. Phone Number</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="phoneNumber" name="phoneNumber"><br></p></p>
+            
+            <p><label for="email">8. Email Address</label>
+            <span style="color:red;">*</span>
+            <p><input type="text" id="email" name="email"><br></p></p>
+
+            <p><label for="checkbox">9. Select your Interest Options</label>
+            <span style="color:red;">*</span> <br> </p>
+
+            <p><input type="checkbox" id="option1" name="option1" value="CIS 098 -IOT: Intelligent Lighting (Directed Study)">
+            <label for="option1">CIS 098 -IOT: Intelligent Lighting (Directed Study)</label></p>
+
+            <p><input type="checkbox" id="option2" name="option2" value="CIS 108 -Internet of Things">
+            <label for="option2">CIS 108 -Internet of Things</label>
+            </p>
+
+            <p><input type="checkbox" id="option3" name="option3" value="CIS 107 - Data Science">
+            <label for="option3">CIS 107 - Data Science</label>
+            </p>
+
+            <p><input type="checkbox" id="option4" name="option4" value="CIS 106 Coding with Python">
+            <label for="option4">CIS 106 Coding with Python</label>
+            </p>
+
+            <p><input type="checkbox" id="option5" name="option5" value="Technest Certificate">
+            <label for="option5">Technest Certificate</label>
+            </p>
+
+            <p><input type="checkbox" id="option6" name="option6" value="Technest Apprenticeship">
+            <label for="option6">Technest Apprenticeship</label>
+            </p>
+
+            <p><br>You can print a copy of your answer after you submit</p>
+
+            <input type="submit" value="Submit Form">
+
+        </form>
+        <script>            // Expanding previous exercise
+            let form = document.forms[0];
+            let first_name=form["fName"].value
+            let last_name=form["lName"].value;
+            let address=form["address"].value;
+            let city=form["city"].value;
+            let state=form["state"].value;
+            let zipcode=form["zipCode"].value ;
+            let phNum=form["phoneNumber"].value;
+            let email=form["email"].value;
+            let options;
+            form.addEventListener("submit", (event) =>
+            {
+                event.preventDefault();
+                let err=validator(form);
+                if (err===-1) {alert("form not submitted");}
+                else
+                {
+                    // parse through options for alert
+                    let str="";
+                    for (let i=1;i<=6;++i)
+                    {
+                        let item="option";
+                        item+=String(i);
+                        str+=checked(form[item])
+                    }
+                    options=str;
+                    alert("First Name: "+ first_name + "\n" +
+                    "Last Name: " + last_name +  "\n" +
+                    "Address: "+ address + "\n" +
+                    "City: "+ city + "\n" + 
+                    "State: "+ state + "\n" +
+                    "Zip Code: "+ zipcode + "\n" +
+                    "Phone Number: "+ phNum + "\n" +
+                    "Email: "+ email + "\n" + 
+                    "Options:"+ options);
+                    
+                }
+                form.addEventListener("OK",(event))
+                    {
+                        const link=document.createElement("a");
+                        const content="some new items go here test"
+                        const file=new Blob([content],{type:'text/plain'});
+                        link.href=URL.createObjectURL(file);
+                        link.download="test.txt";
+                        link.click()
+                        URL.revokeObjectURL(link.href);
+                    }
+            });
+
+            
+            
+
+            // algorithm for parsing options for alert
+            function checked(form)
+            {
+                let str="";
+                if (form.checked)
+                {
+                    str+='\n'
+                    return str+=form.value
+                    
+                }
+                return str;
+            }
+
+            function validator(form)
+            {
+                // check for blank fields (updated)
+                let errType1 = validateFields(form);
+                // validate zip code
+                let errType2 = validateZip(form);
+                // validate email
+                let errType3 = validateEmail(form);
+                // validate address
+                let errType4 = validateAddress(form);
+                // validate first name
+                let errType5 = onlyLetters(form["fName"].value)
+                if (!errType5) {alert("Not valid first name");}
+                // validate last name
+                let errType6 = onlyLetters(form["lName"].value)
+                if (!errType6) {alert("Not valid last name");}
+                // validate city 
+                let errType7 = onlyLetters(form["city"].value)
+                if (!errType7) {alert("Not valid city");}
+                // validate state
+                let errType8 = onlyLetters(form["state"].value)
+                if (!errType8) {alert("Not valid state");}
+                // validate phone number
+                let errType9 = validatePhone(form);
+                if (errType1 === 0 && errType2===0 && errType3 === 0
+                && errType4 === 0 && errType5 === true && errType6 === true && errType7 === true
+                && errType8 === true && errType9 === 0)
+                {
+                    return 1;
+                }
+                return -1;
+            }
+
+            // regex checking for characters without numbers inside
+            function onlyLetters(str)
+            {
+                return /^[a-zA-Z]+$/.test(str);
+            }
+
+            function validateFields(form)
+            {
+                if (form["fName"].value==="") 
+                {
+                    alert("Enter the first name");
+                    return -1;
+                }
+                if (form["lName"].value==="") 
+                {
+                    alert("Enter the last name");
+                    return -1;
+                }
+                if (form["address"].value==="")
+                {
+                    alert("Enter a address");
+                    return -1;
+                }
+                if (form["city"].value==="")
+                {
+                    alert("Enter a city");
+                    return -1;
+                }
+                if (form["state"].value==="")
+                {
+                    alert("Enter a state");
+                    return -1;
+                }
+                if (form["email"].value==="") 
+                {
+                    alert("Enter the email");
+                    return -1;
+                }
+                if (form["zipCode"].value==="") 
+                {
+                    alert("Enter the zip code");
+                    return -1;
+                }
+                if (form["phoneNumber"].value==="")
+                {
+                    alert("Enter a phone number");
+                    return -1;
+                }
+                if (!form["option1"].checked &&
+                !form["option2"].checked && 
+                !form["option3"].checked &&
+                !form["option4"].checked &&
+                !form["option5"].checked &&
+                !form["option6"].checked) {
+                    alert("Check item(s) in the box");
+                    return -1;
+                }
+                return 0;
+            }
+
+            // valid zip is the form xxxxx or xxxxx-xxxx
+            function validateZip(form)
+            {
+                let zips=form["zipCode"].value;
+                // length cannot be more than 10
+                if (zips.length > 10 )
+                {
+                    alert("zip code is too long");
+                    return -2;
+                }
+                // catch length not correct length
+                if (zips.length != 5 && zips.length != 10)
+                {
+                    alert("zip code is not the correct length")
+                    return -5
+                }
+                // check first half
+                for (let i=0;i<5;++i)
+                {
+                    if (isNaN(zips[i]))
+                    {
+                        alert("zip code not in numerical form");
+                        return -1;
+                    }
+                }
+                // check second half 
+                if (zips.length == 10)
+                {
+                    if (zips[5]!='-')
+                    {
+                        alert("unknown character in the zip code field");
+                        return -3;
+                    }
+                    else 
+                    {
+                        // zip code passed the character dash check
+                        for (let i=6;i<10;++i)
+                        {
+                            if (isNaN(zips[i]))
+                            {
+                                alert("zip code is not the correct format");
+                                return -4;
+                            }
+                        }
+                    }   
+                }   
+                return 0;
+            }
+
+            // validate one @ not at beginning and end
+            // validate at least one . not at beginning and end
+            function validateEmail(form)
+            {
+                let atSymbol=0;
+                let dotSymbol=0;
+                let email=form["email"].value;
+                if (email[0]=='@' || email[email.length-1]=='@')
+                {
+                    alert("@ at beginning or end error");
+                    return -1;
+                }
+                if (email[0]=='.' || email[email.length-1]=='.')
+                {
+                    alert(". at beginning or end error");
+                    return -2;
+                }
+                for (let i=0;i<email.length;++i)
+                {
+                    if (email[i]==='@')
+                    {
+                        if (atSymbol!=0 && email[i]==='@')
+                        {
+                            alert("multiple @ symbols in email");
+                            return -3;
+                        }
+                        ++atSymbol;
+                    }   
+                    if (email[i]==='.')
+                    {
+                        ++dotSymbol;
+                    }
+                }
+                if (atSymbol===1 && dotSymbol>0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    alert("No valid symbols in email");
+                    return -4;
+                }
+            }
+
+            function validateAddress(form)
+            {
+                form=form["address"].value;
+                if (form.length < 2)
+                {
+                    alert("No number or street");
+                    return -1;
+                }
+                let i=0;
+                // check first numbers
+                for (i=0;i < form.length;++i)
+                {
+                    if (form[i]===' ')
+                    {
+                        ++i;
+                        break;
+                    }
+                    if (isNaN(form[i]))
+                    {
+                        alert("Invalid Number");
+                        return -1;
+                    }
+                }
+                // check address and street
+                for (i=i;i<form.length;++i)
+                {
+                    if (form[i]===' ')
+                    {
+                        continue;
+                    }
+                    else if (!isNaN(form[i]))
+                    {
+                        alert("Number inside address");
+                        return -1;
+                    }
+                }
+                return 0;
+            }
+
+            // phone is in format xxx-xxx-xxxx
+            function validatePhone(form)
+            {
+                phone = form["phoneNumber"].value;
+                if (phone.length < 12)
+                {
+                    alert("Invalid Number");
+                    alert("Enter in the format xxx-xxx-xxxx");
+                    return -1;
+                }
+                for (let i=0;i<phone.length;++i)
+                {
+                    if (phone[i]==='-')
+                    {
+                        continue;
+                    }
+                    if (isNaN(phone[i]))
+                    {
+                        alert("Not a valid Number");
+                        alert("Enter in the format xxx-xxx-xxxx");
+                        return -2;
+                    }
+                }
+                return 0;
+            }
+        </script>
+    </div>
+</body>
+</html>

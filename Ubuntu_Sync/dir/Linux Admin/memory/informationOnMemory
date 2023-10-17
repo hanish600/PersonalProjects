@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# View memory info
+cat /proc/meminfo;
+# or
+vmstat;
+# or
+top;
+# or
+free -h;
+
+# View memory swap
+swapon --show;

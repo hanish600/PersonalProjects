@@ -1,0 +1,28 @@
+---
+- name: Configurinng a diff hostname and resetting to default
+  hosts: all
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+
+  tasks:
+    - name: check run
+      cisco.ios.ios_command:
+        commands:
+          - sh run
+      register: shrun
+
+    - name: disp run
+      ansible.builtin.debug:
+        var: shrun.stdout_lines
+
+    - name: Set new hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: changemeback
+          
+    - name: Reset hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: csr1000v-1
+
+  

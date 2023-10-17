@@ -1,0 +1,12 @@
+1. run docker-compose up -d MailHog
+2. Follow the steps here: https://kinsta.com/blog/mailhog/
+3. Test it by writing the folloing code:
+    mhsendmail test@mailhog.local <<EOF
+> From: H <kinsta@mailhog.local>
+> To: test <test@mailhog.local>
+> Subject: Playing
+> 
+> Hello, this was a test
+> 
+> See you
+> EOF

@@ -1,0 +1,48 @@
+---
+- name: "Secure the network"
+  hosts: rt
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+
+  tasks:
+  - name: Secure the network
+    cisco.ios.ios_acls:
+      config:
+        - afi: ipv4
+        - afi: ipv6
+          acls:
+            # Low traffic drop with af11
+            - name: R1_TRAFFIC
+              aces:
+                - grant: deny
+                  protocol_options:
+                    tcp:
+                      ack: true
+                  source:
+                    any: true
+                    port_protocol:
+                      eq: www
+                  destination:
+                    any: true
+                    port_protocol:
+                      eq: Telnet
+                  dscp: af11
+        - afi: ipv4
+          acls:
+            - name: R1_ipv4TRAFFIC
+              aces:
+                - grant: deny
+                  protocol_options:
+                    tcp:
+                      ack: true
+                  source:
+                    any: true
+                    port_protocol:
+                      eq: www
+                  destination:
+                    any: true
+                    port_protocol:
+                      eq: Telnet
+                  dscp: af11
+      state: merged
+

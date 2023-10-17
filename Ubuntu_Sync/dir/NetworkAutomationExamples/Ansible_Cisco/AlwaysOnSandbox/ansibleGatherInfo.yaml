@@ -1,0 +1,15 @@
+---
+- name: gather info
+  hosts: all
+  connection: ansible.netcommon.network_cli
+  
+  tasks:
+    - name: gather all facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+      register: facts
+    
+    - name: show facts
+      ansible.builtin.debug:
+        var: facts

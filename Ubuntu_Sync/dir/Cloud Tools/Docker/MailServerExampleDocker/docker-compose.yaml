@@ -1,0 +1,10 @@
+# This is not a verified image
+# WARNING!: THIS IMAGE MAY NOT BE SAFE
+version: "3"
+services:
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025

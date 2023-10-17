@@ -1,0 +1,38 @@
+open ldap
+firewall firewalld ufw
+nftables
+lpr spooling cups
+ip link/route
+storage/partition, grub, mkfs, gpartd
+swap space
+squid
+chroot
+SSL TLS
+systemd
+nis
+networks
+tar/archive gzip gunzip pigz gtar
+free sed awk grep truncate umask wc tee cut watch curl wget tr
+haproxy
+passwd chage
+snapshot
+cpio
+locate updatedb
+info 
+cat /usr/share/doc
+whatis
+whoami
+whereis
+man -f
+which
+dig
+nslookup
+fg bg
+
+
+---------
+ansible
+cobbler
+elk stack
+splunk
+nas

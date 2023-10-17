@@ -1,0 +1,12 @@
+[rt]
+10.10.20.175
+10.10.20.176
+
+[sw]
+10.10.20.177
+10.10.20.178
+
+[all:vars]
+ansible_ssh_pass=cisco
+ansible_ssh_user=cisco
+ansible_network_os=ios

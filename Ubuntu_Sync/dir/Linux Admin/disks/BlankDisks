@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# In this file we will mount a blank disk attached to our vbox
+# Some filesystems are already in the kernel, and may need to be installed
+
+# Enter fstab disk config
+sudo fdisk /dev/sdb;
+# Options:
+# Create empty GPT partition Table
+g
+# Create new partition
+n
+# leave defaults, but have size 1G for our tiny disks
+enter # default partition
+enter # default first sector
++1G # 1G last sector
+# Create another partition
+# Leave all defaults
+n
+enter
+enter
+enter
+# We can save with the following option
+w
+# To view the new disk 
+lsblk;
+
+# We will now define which filesystems to use
+sudo mkfs.ext4 /dev/sdb1 # Give first partition ext4 **Recommended**
+sudo mkfs -t xfs /dev/sdb2 # Give second partition xfs
+
+# Either use sudo blkid on the device
+# OR lsblk -fs to see the new filesystems
+lsblk -fs;
+
+# Create a mount point
+sudo mkdir /mnt/home2;
+sudo mount /dev/sdb1 /mnt/home2;
+sudo cp -Rp /home/* /mnt/home2;
+# To unmount 
+cd /;
+sudo umount /mnt/home2;
+
+# Crating a LVM volume
+# Instead of running fdisk we do something different
+# This represents
+# create new guid partition table enter
+# new partition enter
+# enter enter enter
+# type enter
+# 31 enter
+# write enter
+printf "g\nn\n\n\n\nt\n31\nw\n" | sudo fdisk /dev/sdc
+# To apply partition label to sdc
+sudo parted /dev/sdc name 1 "DriveThree"
+# Create a physical volume 
+sudo pvcreate /dev/disk/by-partlabel/DriveThree
+# Create a Volume Group
+sudo vgcreate VolGrp1 /dev/disk/by-partlabel/DriveThree
+# Create logical volume
+sudo lvcreate -l 65%FREE -n LogicalGrp1 VolGrp1
+# To make a filesystem
+sudo mkfs -t btrfs /dev/mapper/VolGrp1-LogicalGrp1
+# We can now mount this
+sudo mkdir /mnt/home3;
+sudo mount /dev/mapper/VolGrp1-LogicalGrp1 /mnt/home3;
+# use lvextend with btrfs filesystem resize max to increase 
+# size
+sudo lvextend -l 100%FREE VolGrp1/home3
+sudo btrfs filesystem resize max /mnt/home3
+
+# To make mounts on boot
+# Get the UUID first
+ls -l /dev/disks/by-uuid/
+# Put the UUID MountPoint Type Options Dump Pass
+echo "e71b967b-3563-4ea8-b6ef-ee5185a822f5 /opt ext4 defaults 0 1" | sudo tee -a /etc/fstab
+# Reboot
+# Run Mount
+sudo mount -a;
+##### Newer Alternative #####
+# Make a local dir
+sudo mkdir -p /usr/local/lib/systemd/system
+# Add the following
+# [Unit]
+# Description=MountingWithSysD
+# [Mount]
+# What=/dev/mapper/VolGrp1-LogicalGrp1
+# Where=/srv
+# Type=btrfs
+# Options=defaults
+# [Install]
+# WantedBy=multi-user.target
+# to /usr/local/lib/systemd/system/srv.mount
+# then use systemctl
+sudo systemctl enable --now srv.mount;
+
+# We will now try adding security
+# First we will shred the disk to hide its contents
+sudo shred -v -n1 /dev/sdb1;
+# We now need to format the partition
+# We will set up Linux Unifed Key Setup (LUKS)
+sudo cryptsetup luksFormat /dev/sdb1;
+# We now need to open this to encrypt and luksClose to stop encrypting
+# Make sure to unmount before using luksClose
+# ======================= To add to boot ========================================
+# Get UUID with cryptosetup luksUUID and place it in /etc/crypttab before fstab
+# /cryptfile should have a secret pass and luksAddKey adds this secret pass
+# ===============================================================================
+sudo cryptsetup luksOpen /dev/sdb1 encrypted-opt
+# The final set is setup a filesystem and mount it
+# set up the filesystem with 
+sudo mkfs.btrfs /dev/mapper/encrypted-opt
+sudo mount /dev/mapper/encrypted-opt /opt

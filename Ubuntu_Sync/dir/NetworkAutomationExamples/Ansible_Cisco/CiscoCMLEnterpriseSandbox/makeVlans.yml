@@ -1,0 +1,21 @@
+---
+- name: "set l2 vlans"
+  hosts: sw
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+
+  tasks:
+  - name: set vlans on switches
+    cisco.ios.l2_interfaces:
+      config:
+        - name: Ethernet1/15
+          mode: access
+          access:
+            vlan: 104
+          voice:
+            vlan: 40
+        - name: Ethernet1/16
+          mode: trunk
+          trunk:
+            allowed_vlans: 104, 40
+      state: merged

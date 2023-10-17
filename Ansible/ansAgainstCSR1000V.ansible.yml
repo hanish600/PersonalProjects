@@ -1,0 +1,10 @@
+---
+- name: Collecting Test Info
+  hosts: CSR1000V
+  connection: ansible.netcommon.network_cli
+  tasks:
+    - name: test name
+    - cisco.ios.ios_command:
+        commands:
+          - show version
+  

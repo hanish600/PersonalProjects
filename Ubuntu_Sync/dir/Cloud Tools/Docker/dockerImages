@@ -1,0 +1,125 @@
+#!/bin/bash
+
+# This file contains commands for working with images
+
+# Check version and information to verify installation & setup
+docker version;
+docker info;
+
+# Search for first 5 images of alpine
+# Stars indicate the number of people that liked the image
+# Official identifies the image can be trusted
+# Automated indicates the image is built automatically when pushed to GitHub
+docker search alpine --limit 5;
+
+# To add filters to search
+docker search --filter is-automated=false --filter stars=50 --filter is-official=true alpine;
+
+# pull an official archlinux image
+docker image pull archlinux;
+
+# To pull a different version of an image (not latest), use hubname:hubtag-version
+docker image pull consul:1.15;
+
+# We can also use digests 
+docker image pull memcached@sha256:a3f417255083ac4c770f6c8b889fa855656f2156d5a4585681216b772bbf0c99;
+
+# We can view images by running either of the following
+docker image ls;
+docker images;
+
+# We can view containers with
+docker container ls;
+docker ps;
+
+# To view older images & containers (can be restarted like a VM)
+# use the -a tag
+docker images -a;
+docker container ls -a;
+
+# To view last ran container
+docker container ls -l;
+
+# To run an image and run bash application on it in iterative terminal mode
+# Use ctrl+pq to exit without terminating the container
+docker container run -it --name myUbuntuServ ubuntu /bin/bash;
+# We can also use docker create and docker start
+$ID=$(docker create -it ubuntu /bin/bash)
+docker container start -i -a $ID;
+# We can also run this in the background with -d, then later attach it
+# We can also remove during container exit with docker run --rm ubuntu command
+# We may also use read-only with docker container run --read-only
+docker container run -d -it ubuntu /bin/bash;
+docker run --rm f91b66df14ab;
+
+# We can get container logs using the following
+docker container logs f91b66df14ab;
+# We can use the powerful timestamp and tail features to observe what was done
+# And to know when each action was done
+docker container logs -t -f f91b66df14ab
+
+# To stop a container
+docker container stop f91b66df14ab;
+# To stop all containers
+docker container stop $(docker ps -a -q);
+
+
+# To delete all images by force (mostly for reclaiming space on my computer)
+docker image rm -f $(docker images -a -q);
+# To delete a container 
+docker stop 7822138c0c05;
+docker container rm 7822138c0c05;
+# to remove all containers
+docker container rm -f $(docker ps -aq);
+# To remove all containers another method is 
+docker create --name container1 ubuntu /bin/bash;
+docker create --name container2 ubuntu /bin/bash;
+docker create --name container3 ubuntu /bin/bash;
+docker ps -a;
+docker container prune;
+
+# Setting a restart policy
+# never restart, restart on failures(non-zero return), and always
+docker container run --restart={no,on-failure,always} ubuntu /bin/bash;
+# Setting a counter for n retries
+docker container run --restart={no,on-failure,always}:nRetries ubuntu /bin/bash;
+
+# We might need privileged mode to do certain things 
+# WARNING: !! THIS CAUSES ALL CAPABILITIES TO BE ALLOWED AND ALLOWS SUDO !!
+# @@ RECOMMENDED: USE --cap-add AND --cap-drop INSTEAD @@
+docker container run --privileged -it ubuntu /bin/bash;
+
+# We can test our privileged command before and after running this mode with
+mount --bind /home /mnt;
+ls /mnt;
+touch /home/randomTxtToAppearInMnt;
+ls /mnt;
+
+# Recommended Use:
+docker container run --cap-add=chown -it ubuntu /bin/bash;
+
+# To mount a device
+docker countainer run --device=/dev/sda:/dev/sdc -it ubuntu /bin/bash;
+
+# We can inject processes into docker
+docker container exec -it $(docker container run -d redis) /bin/bash
+# To view this run:
+apt-get update;
+apt-get install procps;
+ps -aux;
+
+# To Inspect containers
+docker container inspect 78ed93005428;
+# To specify, for example a network id filter (The container had no ip address after death)
+docker container inspect --format='{{.NetworkSettings.Networks.bridge.NetworkID}}' festive_brattain;
+
+# We can also apply labels to make our containers easier to find
+# We can add any key:val pairs
+docker contianer run --name UTest -l ubuntuimg.com ubuntu date;
+docker container ls -a -f label=ubuntuimg.com;
+# To view this label in a pretty format
+docker container inspect --format '{{json .Config.Labels}}' UTest | jq ".";
+
+# We can run a process with init
+# This uses tini and --init-path allows for configuration
+docker container run --init -it ubuntu /bin/bash;

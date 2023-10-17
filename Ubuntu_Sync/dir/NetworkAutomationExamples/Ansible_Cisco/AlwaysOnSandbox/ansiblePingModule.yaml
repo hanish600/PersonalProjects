@@ -1,0 +1,19 @@
+---
+- name: This will cover the pinging modules
+  hosts: all
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+
+  tasks:
+    # This works currently as gig eth is configured
+    - name: ping stuff
+      cisco.ios.ios_ping:
+        afi: ip #ipv4
+        count: 3
+        dest: 192.168.10.1
+        timeout: 2
+      register: pings
+    
+    - name: disp pings
+      ansible.builtin.debug:
+        var: pings

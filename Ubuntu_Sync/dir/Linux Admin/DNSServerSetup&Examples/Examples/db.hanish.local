@@ -1,0 +1,19 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	ns1.hanish.local. root.hanish.local. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+
+@	IN	NS	ns1.hanish.local.
+ns1	IN	A	10.0.2.15
+www	IN	A	10.0.2.15
+ftp	IN	A	10.0.2.15
+@	IN	MX	10	mail
+mail	IN	A	10.0.2.15
+@	IN	AAAA	::1

@@ -1,0 +1,24 @@
+---
+- name: Update all hostname
+  hosts: all
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+  
+  tasks:
+    - name: sh vers
+      tags: [versions,b]
+      ios_command:
+        commands:
+          - show version
+      register: out
+    
+    - name: print ios
+      tags: [versions,b]
+      ansible.builtin.debug:
+        var: out.stdout_lines
+
+      # Playing with tags
+    - name: a version tag test
+      tags: [a,b]
+      debug: 
+        msg: "tags worked"

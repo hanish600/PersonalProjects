@@ -1,0 +1,15 @@
+---
+- name: testing on a diff sandbox (always on)
+  hosts: all # only one host is available on this sandbox
+  connection: ansible.netcommon.network_cli
+  gather_facts: no
+
+  tasks:
+    - name: get vers
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: test
+    - name: debugging the output of new device
+      ansible.builtin.debug:
+        var: test.stdout_lines

@@ -1,0 +1,171 @@
+#!/bin/bash
+
+# This contains other commands that are important to Linux Sys Administration
+# This includes Filters, Links, proc files, system call traces, log files, and others
+
+# We will try to find the randomWords file from our current directory
+# We will include symbolic links, depth and type file
+find -L ./ -depth -type f -name "randomWords.*" -exec cat {} \;
+
+# Using xargs
+find -L ./ -depth -type f -name "randomWords.*" -print0 | xargs -0 cat;
+
+# Create soft link & hard link
+# Hard link to e.txt (Another entry of the file)
+ln ~/e.txt ~/Desktop/hard.txt
+# Soft link to slink.txt (Shortcut)
+ln -s ~/shortcut.txt ~/Desktop/shortcuts
+
+# To view information about the OS
+uname -a;
+# OR
+cat /etc/os-release
+# OR 
+cat /etc/lsb-release;
+# OR
+lsb_release -sd;
+
+# To trace system calls
+strace cat e.txt
+
+# View information about memory, cpu, and more
+# Memory: 
+cat /proc/meminfo;
+# or
+vmstat;
+# or
+top;
+# or
+free -h;
+
+# Cpu info:
+cat /proc/cpuinfo;
+
+# To view log files
+# systemd journal
+journalctl;
+
+# Most information is found in /var/log
+# For example
+# Hardware Info:
+cat /var/log/dmesg;
+# Printing Info: 
+cat /var/log/cups/access_log;
+# system related logs
+cat /var/log/syslog;
+
+# This will go over archives and zip (compressed) files
+g
+t
+
+# To make ssh-keys
+ssh-keygen -b 4096 -C "Example";
+ssh-copy-id ip_for_remote_server;
+# Newer Way for ssh-keys(Using man page)
+ssh-keygen -t ed25519 -C "Different Algorithm"
+# With identify file we can use specific files
+ssh-copy-id -i ./ssh/id_ed25519.pub ip_for_remote_server;
+ssh ip_remote -i ./ssh/id_ed25519.pub;
+# Key are found here (public uses permissions 644, private uses 600)
+ls .ssh/
+
+# view all systemd controlled applications
+systemctl -a;
+# View running services
+systemctl --list-units --type service --state running
+# View timers
+systemctl list-timers
+# To find service files
+ls -la /etc/systemd/system/multi-user.target.wants;
+# Show systemctl config
+systemctl cat sshd;
+systemctl show sshd;
+systemctl show sshd.service
+# Find slow systemd controlled programs
+systemd-analyze blame;
+# edit a systemd config 
+sudo systemctl edit ssh.config;
+# view systed config changes
+cat /etc/systemd/system/sshd.service.d/override.conf;
+# see systemd path 
+systemctl --no-pager show --property=UnitPath;
+# view systemd timers
+systemctl --no-pager list-timers --all;
+# View cron logs
+sudo journalctl -u cron;
+
+# View a systems information using the desktop management interface
+# *** Some information is not available in virtual machine ***
+sudo dmidecode -t bios;
+sudo dmidecode -s bios-version;
+# OR
+# Use lshw with any options
+sudo lshw;
+sudo lshw -numeric -c network;
+# View pci devices
+lspci -nnk;
+# List usbs
+lsusb;
+# View kernel objects
+ls -lh /sys;
+# Find detected hardware
+sudo dmesg;
+sudo dmesg -H; # Easier to read
+# using lspci numbers, we see the entry for the network device
+sudo dmesg | grep 0680;
+# Great device entries to look at
+ls -l /dev/disk/by-uuid/
+# This UUID info can be used in fstab
+cat /etc/fstab;
+# Test disk speed
+sudo hdparm --direct -tT /dev/sda;
+
+# View modules on system
+lsmod;
+# View module details
+modinfo wmi;
+# Load a module
+sudo modprobe nf_tables ;
+lsmod | grep "nf_tables";
+# Load module on bootup (Use folder /etc/modules-load.d/nftables.conf)
+echo "nf_tables" | sudo tee /etc/modules-load.d/nftables.conf;
+# Do not load module as it is problematic
+echo "blacklist problemMod" | sudo tee -a /etc/modprobe.d/blacklist.conf;
+
+# View Linux hierarchy
+man hier;
+# To see these folders
+ls /;
+# Find out where you are
+pwd;
+# Navigate current directory
+cd /;
+
+# Get package info
+dpkg-query -W;
+apt list --installed;
+# Interactive interface for packages
+aptitude;
+# Get package upgradables
+apt list --upgradable;
+# View repos 
+ls /etc/apt/sources.list.d;
+# View changes
+apt changelog linux-image-aws;
+# See logs
+cd /var/log;
+ls -l;
+# Last 10 recent events
+sudo tail -10 syslog;
+# Remove old logs
+sudo logrotate -f /etc/logrotate.conf;
+# use logger to log messages to syslog or messages
+logger "Testing";
+# Run logs systemd with -f to follow new changes
+sudo journalctl -f;
+# Run journalctl neatly focusing on cron
+sudo journalctl -x -u cron;
+# Log by level and pipe to tail
+sudo jorunalctl -p crit | tail -5;
+# Change logging options at
+cat /etc/systemd/journald.conf;

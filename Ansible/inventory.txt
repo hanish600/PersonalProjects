@@ -1,0 +1,8 @@
+[CSR100V]
+https://sandbox-iosxe-recomm-1.cisco.com
+
+[all:vars]
+ansible_ssh_user = developer
+ansible_ssh_pass = lastorangestoreball8876
+ansible_connection = ssh
+ansible_nework_os = cisco.ios.iosxe

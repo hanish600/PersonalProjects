@@ -1,0 +1,149 @@
+1. Trunks & Vlans
+2. VTP
+3. EtherChannels (load balance + link redundancy)
+4. SVI (L3 Routing)
+5. DHCP (for dynamic routing)
+6. HSRP (router redudency)
+7. Internet
+
+1. Trunks
+show cdp nei
+switchport mode trunk
+vtp domain nightmare
+
+
+vlan 10
+name Voice
+
+vlan 30
+name 1stfloor
+
+vlan 32
+name 2ndfloor
+
+vlan 40
+name Wifi
+
+vlan 444
+name Server
+
+int vlan 10
+ip address 192.168.10.1 255.255.255.0
+description voice-vlan
+no shut
+
+int vlan 30
+ip address 192.168.30.1 255.255.255.0
+description 1stfloor
+no shut
+
+int vlan 32
+ip address 192.168.32.1 255.255.255.0
+description 1stfloor
+no shut
+
+int vlan 40
+ip address 192.168.40.1 255.255.255.0
+description wifi
+no shut
+
+int vlan 444
+ip address 192.168.50.1 255.255.255.0
+description servers
+no shut
+
+int vlan 10
+ip address 192.168.10.2 255.255.255.0
+description voice-vlan
+no shut
+
+int vlan 32
+ip address 192.168.32.2 255.255.255.0
+description 1stfloor
+no shut
+
+int vlan 30
+ip address 192.168.30.2 255.255.255.0
+description 1stfloor
+no shut
+
+int vlan 40
+ip address 192.168.40.2 255.255.255.0
+description wifi
+no shut
+
+int vlan 444
+ip address 192.168.50.2 255.255.255.0
+description servers
+no shut
+
+sh vtp status
+sh int status
+sh int trunk
+
+
+int vlan 10
+standby 10 ip 192.168.10.3
+standby 10 priority 105
+standby 10 preempt
+
+int vlan 30
+standby 30 ip 192.168.30.3
+standby 30 priority 105
+standby 30 preempt
+
+int vlan 32
+standby 32 ip 192.168.32.3
+
+int vlan 40
+standby 40 ip 192.168.40.3
+
+int vlan 444
+standby 50 ip 192.168.50.3
+
+int vlan 10
+standby 10 ip 192.168.10.3
+
+int vlan 30
+standby 30 ip 192.168.30.3
+
+int vlan 32
+standby 32 ip 192.168.32.3
+standby 32 priority 105
+standby 32 preempt
+
+int vlan 40
+standby 40 ip 192.168.40.3
+standby 40 priority 105
+standby 40 preempt
+
+int vlan 444
+standby 50 ip 192.168.50.3
+standby 50 priority 105
+standby 50 preempt
+
+dhcp pools for all subnets
+
+ip dhcp pool Voice
+default-router 192.168.10.3
+network 192.168.10.0 255.255.255.0
+
+ip dhcp pool 1stfloor
+default-router 192.168.30.3
+network 192.168.30.0 255.255.255.0
+
+ip dhcp pool 2ndfloor
+default-router 192.168.32.3
+network 192.168.32.0 255.255.255.0
+
+ip dhcp pool Wifi
+default-router 192.168.40.3
+network 192.168.40.0 255.255.255.0
+
+ip dhcp pool Server
+default-router 192.168.50.3
+network 192.168.50.0 255.255.255.0
+
+switchport mode access 
+switchport voice vlan 10
+

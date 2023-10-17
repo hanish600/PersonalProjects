@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Confirm 64 bit architecture
+uname -i;
+
+# confirm kernel support 
+uname -r;
+
+# confirm correct storage
+grep device-mapper /proc/devices
+
+# confirm namespace & cgroups are enabled
+grep -i namespaces /boot/config-6.2.0-32-generic 
+grep -i cgroups /boot/config-6.2.0-32-generic 

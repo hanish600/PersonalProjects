@@ -1,0 +1,24 @@
+SAMBA
+------
+Optimized for Windows systems
+User-based Authentication & Kerberos
+AES by default
+File & Print sharing
+
+NFS
+------
+Optimized for Unix
+Host-based Authentication & Kerberos
+Encryption not default
+File share and network block devices
+
+FTP
+------
+Not dependant on OS
+Encryption not default
+FTP Secure is more preferred
+
+Other varients:
+FTPS
+AFP
+SSH/SFTP

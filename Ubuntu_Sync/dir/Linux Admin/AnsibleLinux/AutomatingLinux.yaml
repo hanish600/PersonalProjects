@@ -1,0 +1,41 @@
+---
+- name: Trying Ansible Linux
+  hosts: all
+  connection: local
+  gather_facts: no
+  become: true
+  # We can remove something by setting state to absent
+  tasks:
+    - name: Update Linux to latest version & clean up
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full 
+        autoclean: true
+        autoremove: true
+        state: present
+    - name: Block Address
+      ansible.builtin.iptables:
+        chain: OUTPUT
+        source: "8.12.3.4"
+        jump: DROP
+    - name: Have group gp
+      ansible.builtin.group:
+        name: gp
+        state: present
+    - name: BackUp Projects to VM Desktop
+      ansible.builtin.copy:
+        src: /media/sf_Desktop/Ubuntu_Sync/dir
+        dest: /home/hanish/Desktop
+        owner: root
+        group: root
+        directory_mode: "700"
+        mode: "700"
+        backup: true
+        force: true
+    - name: Setup some tasks
+      ansible.builtin.cron:
+        name: "directory list"
+        month: "10"
+        job: "ls > /home/hanish/Desktop/list.txt"
+        state: present
+    

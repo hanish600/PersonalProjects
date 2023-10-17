@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Set up storage pools
+# We can initialize with lxd init
+sudo lxc storage create example-pool dir
+
+# Launch an image and attach storage pool
+sudo lxc launch ubuntu:22.04 example -s example-pool
+
+# To view container status
+sudo lxc list;
+
+# To execute a command
+sudo lxc exec example-container "hostname";
+sudo lxc exec example-container bash;
+# In bash
+ls;
+ps aux;
+
+# To remove container
+sudo lxc stop example-container;
+sudo lxc delete example-container;
+
+# Delete storage pool
+sudo lxc storage delete example-pool;
+
+# Delete image
+sudo lxc image list;
+sudo lxc image delete 8b3a9a81a3f2;

@@ -1,0 +1,15 @@
+---
+- name: "Backup current configs - all devices"
+  hosts: all
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+
+  # This will create a backup in the current directory + /backups/ + host_name
+  # as backup.cfg
+  tasks:
+  - name: "Calling cisco backups"
+    cisco.ios.ios_config:
+      backup: yes
+      backup_options: 
+        dir_path: "./backups/{{ inventory_hostname }}"
+        filename: backup.cfg

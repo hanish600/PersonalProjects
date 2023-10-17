@@ -1,0 +1,37 @@
+# MTA Mail Transfer Agent, MUA Mail User Agent, MSA Mail Submission Agent
+# MDA Mail Delivery Agent, MRA Mail Retrieval Agent, 
+# SMTP Simple Mail Transfer Protocol
+
+# MTA recieves mail from the MUA/MSA
+# MTA talks to the delivery agent MDA or SMTP for remote server
+
+# MUA can be thunderbird, outlook, or other desktop applications
+# They communicate to send mail or recieve mail through mail server or pop/imap server
+
+# MSA listens on port 587 and listens to mail from MUA to deliver to MTA
+
+# MDA takes mail from MTA and delivers mail to inbox
+
+# MRA fetches email from remote server
+
+# Avoid insecure SMTP PORT 25
+# Port SMTP over SSL = 587
+# Port IMAP over SSL = 993
+# Port POP(2,3) = 109,110(recommended)
+
+# Mails are sent to user with POP or IMAP protocol
+# We now use mail directories that store different emails as a file in a directory
+
+# Relays allow mail through authentication
+# Mail Routers forward email to another server
+# Local delivery is where the mailbox resides
+# Inbound gateways send mail through mx records and go to the email servers
+
+# Incoming scanners scan for spam mail
+# Outgoing scanners don't recieve mail outside it's internal servers
+
+# Round robin can be used for load balancing
+# Backup mail servers await for the primary server and don't send mail
+# smtp load balancers can also be used for fault-tolerance
+# smtp authentication can be used for remote access
+

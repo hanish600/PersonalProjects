@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Start by donloading apache
+sudo apt update;
+sudo apt install apache2;
+
+# Visit the local address
+curl localhost:80;
+
+# View root document
+cat /etc/apache2/site-enabled/000-default.conf | grep "DocumentRoot"
