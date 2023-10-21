@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# One of the most important commands
+# Tells us the point where the packet can't route
+# I've seen in packet tracer is
+tracert 1.1.1.1 # Alternatively, traceroute on Windows
+
+# view bandwidth use
+sudo iftop -i enp0s3;
+sudo iftop -t -i enp0s3;
+
+# view sockets 
+ss;
+ss -l sport 1;
+
+# capture packets
+tcpdump;
+
+# Some other tools not currently mentioned
+# To be added in later projects 
+netstat;
+netstat -R;
+ipconfig/ifconfig;
+# There are newer iproute2 tools
+# These are a few examples
+ip;
+route;

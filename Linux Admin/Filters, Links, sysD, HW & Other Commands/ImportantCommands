@@ -55,8 +55,31 @@ cat /var/log/cups/access_log;
 cat /var/log/syslog;
 
 # This will go over archives and zip (compressed) files
-g
-t
+# While not shown, xz is one of my favorite
+touch aFile;
+touch aFile2
+# Create and verbose(print) a archive file
+tar -cvf tarzip.tar aFile aFile2;
+# Display the contents of the archive
+tar -tvf tarzip.tar;
+touch aFile3;
+touch aFile4;
+# append to the archive
+tar -rvf tarzip.tar aFile3 aFile4;
+tar -tvf tarzip.tar;
+touch autoZipThis;
+# Create and verbose(print) a file, but also gzip(Compress) it
+tar -cvzf zippedFile.tar.gz autoZipThis;
+tar -tvf zippedFile.tar.gz;
+# Extract the tar gzip file
+tar -xvf zippedFile.tar.gz;
+touch zipThisWithGzip;
+# gzip(Compress) the file with verbose
+gzip -v zipThisWithGzip; 
+# List the contents of the compressed file
+gzip -l zipThisWithGzip.gz;
+# Unzip the file and verbose it
+gunzip -v zipThisWithGzip;
 
 # To make ssh-keys
 ssh-keygen -b 4096 -C "Example";
