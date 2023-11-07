@@ -16,11 +16,9 @@ ss -l sport 1;
 # capture packets
 tcpdump;
 
-# Some other tools not currently mentioned
-# To be added in later projects 
 netstat;
 netstat -R;
-ipconfig/ifconfig;
+ifconfig;
 # There are newer iproute2 tools
 # These are a few examples
 ip;
