@@ -12,3 +12,4 @@
 10. L3 switch routing has great performance benefits over a L3 router(Might be different today), but is limited in features
 11. Set up login banners to prevent hackers
 12. Use bpduguard
+13. OSPF Key Chains
