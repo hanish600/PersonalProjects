@@ -1,0 +1,8 @@
+K1 = Bandwidth
+K2 = Load
+K3 = Delay
+K4 = Reliability
+K5 = MTU
+
+Only K1 & K3 are 1 by default
+The rest are not used in calculation for default
