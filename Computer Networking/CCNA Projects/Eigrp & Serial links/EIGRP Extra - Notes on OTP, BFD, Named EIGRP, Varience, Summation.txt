@@ -1,0 +1,4 @@
+OTP is used for remote branches without needing additional isp services and can be configured in named eigrp mode with the remote-neighbors source uni-cast lisp-encap commands 
+BFD is faster router convergence when a interface is down and can be enabled from the interface and router eigrp (During testing, BFD gave several errors)
+Variance is used for unequal balancing and it is found from FD / Metric cost of the routes you wish to use. 
+Summation can be done manually in the router eigrp mode
