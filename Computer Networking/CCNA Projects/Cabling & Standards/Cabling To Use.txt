@@ -1,0 +1,22 @@
+CAT3 = 10Base-T = 10 Mbps/100m
+CAT5 = 100Base-T = 100 Mbps/100m
+CAT5e = 1GBase-T = 1 Gbps/100m
+CAT6 = 10GBase-T OR 1GBase-T = 10Gbps/55m or 1Gbps/100m
+CAT6A = 10GBase-T = 10GBps/100m
+CAT7 = 10GBase-T = 10GBps/100m
+CAT8 = 40GBase-T = 40GBps/30m
+
+USE MMF for long distance (A few hundred meters)
+USE SMF for very long distance (A few KM) 
+SMF = 8-10 u (Yellow)
+MMF = 50-100 u (Blue or Orange)
+SMF = Very Long Range + High Speed + Single mode
+MMF = Long range + Multi mode
+
+SFP = 4.25 Gbps
+SFP+ = 16 Gbps
+QSFP = 40-200+ Gbps
+
+AVOID APC + UPC COMBO FOR BEST PERFORMANCE
+Angled Physical Contact tilts cable by 8 degree to avoid reflection
+Ultra Physical Contact can cause reflection

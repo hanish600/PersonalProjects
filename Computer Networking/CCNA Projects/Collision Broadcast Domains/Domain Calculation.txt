@@ -1,0 +1,15 @@
+Collision Domains - Seperated Links lead to less collisions on that link
+L2 and above devices can seperate each link through unicast causing less collisions
+
+Broadcast Domains - Seperated Networks lead to less traffic congestion on the network
+L3 devices ( & VLANS ) are the only ones which seperate networks into its own network 
+which leads to less traffic on the network
+
+Hubs are the worst in both since they do not seperate either domain
+
+		Collision Domains	Broadcast Domains
+Hubs		1			1
+Bridges		1 per port		1
+Switches	1 per port		1
+L3 Switches	1 per port		1 per port
+Routers		1 per port		1 per port

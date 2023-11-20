@@ -1,0 +1,42 @@
+46 = EF
+Since DSCP is 6 bits
+
+Example:
+                            Binary
+26 = 16+8+2 = 011 | 010 (32 16 8 | 4 2 1)
+
+      DSCP Class           DSCP Drop
+= 4(0) + 2(1)+ 1(1) | 2(0) + 1(1) + 0 (DSCP)
+
+= AF31 (Class 3, Drop Level 1)
+
+Visually (Pattern Here):
+
+		DROP1(Low)      DROP2(Medium)	DROP3(High)
+
+Class	1	1		2		3
+		AF(11)		AF(12)		AF(13)
+		10		10+2=12		12+2=14
+
+Class	2	1		2		3
+		AF(21)		AF(22)		AF(23)
+		14+4=18		18+2=20		20+2=22
+
+Class	3	1		2		3
+		AF(31)		AF(32)		AF(33)
+		22+4=26		26+2=28		28+2=30
+
+Class	4	1		2		3
+		AF(41)		AF(42)		AF(43)
+		30+4=34		34+2=36		36+2=38
+
+Example 2:
+class selector 1 = 8(1) = 8
+class selector 2 = 8(2) = 16
+class selector 3 = 8(3) = 24
+.
+.
+.
+class selector 7 = 8(7) = 56
+Note: CS will not use the last 3 bits since ip precedence(older) is 3 bits
+and since it increments in 8's
