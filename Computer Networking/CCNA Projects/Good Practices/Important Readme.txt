@@ -21,3 +21,4 @@
 19. Set minimum password length using the security command 
 20. Set failed login timeouts using the login command
 21. Use Patch Panels & block 110 (Don't replace those expensive switch ports)
+22. Use descriptions and acl remarks
