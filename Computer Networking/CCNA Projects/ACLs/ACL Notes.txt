@@ -1,0 +1,11 @@
+To restructure acl lists:
+ip access-list resequence acl_number-name start_num increment
+
+*** Note *** : It is recommended to allow space between sequences for additional entries
+Also It is recommended for extended acls to be close to the source while standard acls are close to the destination
+
+Use ip named acls for ease
+Use extended acl for more options on filtering instead of only source/dest ip
+
+Standard ACLs : 0-99 	1300-1999
+Extended ACLs : 100-199 2000-2699

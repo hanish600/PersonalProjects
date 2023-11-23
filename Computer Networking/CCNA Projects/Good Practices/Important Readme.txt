@@ -22,3 +22,4 @@
 20. Set failed login timeouts using the login command
 21. Use Patch Panels & block 110 (Don't replace those expensive switch ports)
 22. Use descriptions and acl remarks
+23. 802.1aq(SPB) can be used over 802.1w(RSTP)/802.1s(MST) (Not on regular hardware)
