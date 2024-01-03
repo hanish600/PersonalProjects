@@ -1,0 +1,33 @@
+REM Find System Information
+systeminfo
+
+REM Find date & time
+date /t
+time /t
+
+REM Find tasks 
+tasklist
+REM Current option
+tasklist /v
+
+REM Find Services 
+sc query
+
+REM View backward compatible label names 
+dir /x
+
+REM View all sub folders
+dir /s /p
+
+REM View users and accounts
+net users
+net accounts
+
+REM View all network connections
+netstat -ant
+
+REM View all valid networks
+for /L %i in (1,1,255) do @ping -n 1 -w 10 192.168.1.%i > null && echo Pinging 192.168.1.%i Success!
+
+REM View command history
+doskey /history
