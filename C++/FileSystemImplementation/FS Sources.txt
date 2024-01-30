@@ -1,0 +1,6 @@
+This contains information to implement the filesystem
+
+1. C++ Data Structures & Algorithms Design Principles by 
+John Carey, Shreyans Doshi, Payas Rajan
+
+2. MIT xv6
