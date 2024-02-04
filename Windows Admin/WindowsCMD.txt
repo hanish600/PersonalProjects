@@ -31,3 +31,17 @@ for /L %i in (1,1,255) do @ping -n 1 -w 10 192.168.1.%i > null && echo Pinging 1
 
 REM View command history
 doskey /history
+
+REM DNS 
+REM Find in devices the dns file to edit or use server admin GUI
+ipconfig /displaydns
+
+REM IP CONFIGURATIONS USE
+ipconfig
+
+REM ARP CACHES
+arp -a
+
+REM ping packet paths
+tracert X.X.X.X
+pathping X.X.X.X
